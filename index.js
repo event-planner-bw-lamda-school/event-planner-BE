@@ -12,6 +12,16 @@ const {
 
 server.use(express.json());
 
+// welcome page
+server.get('/', async (req, res) => {
+  try {
+    res.status(200).json({message: "Welcome the the Event Planner Backend!"})
+  }
+  catch(error) {
+    res.status(500).json({ message: "Internal Error: Sorry for inconvenience" })
+  }
+})
+
 // register
 server.post("/api/register", checkUserInfo, async (req, res) => {
   const user = req.body;
