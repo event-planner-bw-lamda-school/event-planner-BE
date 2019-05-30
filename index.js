@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const server = express();
@@ -147,7 +148,7 @@ server.delete("/api/events/:id", (req, res) => {
     });
 });
 
-const PORT = 3500;
+const PORT = 3500 || process.env.PORT;
 server.listen(PORT, () => {
   console.log(`Server is up at PORT ${PORT}`);
 });
