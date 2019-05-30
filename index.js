@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const server = express();
-
+const cors = require('cors');
 const db = require("./usersModel");
 
 const {
@@ -12,7 +12,7 @@ const {
 } = require("./authMiddleware");
 
 server.use(express.json());
-
+server.use(cors())
 // welcome page
 server.get('/', async (req, res) => {
   try {
