@@ -148,7 +148,7 @@ server.delete("/api/events/:id", (req, res) => {
     });
 });
 
-const PORT = 3500 || process.env.PORT;
+const PORT = process.env.PORT;
 server.listen(PORT, () => {
   console.log(`Server is up at PORT ${PORT}`);
 });
