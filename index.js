@@ -1,7 +1,8 @@
+require('dotenv').config()
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const server = express();
-
+const cors = require('cors');
 const db = require("./usersModel");
 
 const {
@@ -11,6 +12,16 @@ const {
 } = require("./authMiddleware");
 
 server.use(express.json());
+server.use(cors())
+// welcome page
+server.get('/', async (req, res) => {
+  try {
+    res.status(200).json({message: "Welcome the the Event Planner Backend!"})
+  }
+  catch(error) {
+    res.status(500).json({ message: "Internal Error: Sorry for inconvenience" })
+  }
+})
 
 // register
 server.post("/api/register", checkUserInfo, async (req, res) => {
@@ -137,7 +148,7 @@ server.delete("/api/events/:id", (req, res) => {
     });
 });
 
-const PORT = 3500;
+const PORT = process.env.PORT;
 server.listen(PORT, () => {
   console.log(`Server is up at PORT ${PORT}`);
 });
