@@ -17,10 +17,7 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .unique();
 
-    user
-      .string("role", 100)
-      .notNullable()
-      .unique();
+    user.string("role", 100).notNullable();
 
     user.string("password", 255).notNullable();
   });
