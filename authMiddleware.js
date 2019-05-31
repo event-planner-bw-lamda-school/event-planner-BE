@@ -13,13 +13,17 @@ const checkUserInfo = (req, res, next) => {
 };
 
 const restricted = (req, res, next) => {
-  const token = req.headers.authorization;
+  const token = req.get("Authorization");
+
+  // const token = req.headers.Authorization;
+  console.log(token);
   if (token) {
     jwt.verify(token, secret, (err, decodedToken) => {
       if (decodedToken) {
         req.decodedJWT = decodedToken;
         next();
       } else {
+        console.log(err);
         res.status(401).json({ message: "Please try again" });
       }
     });

@@ -5,7 +5,8 @@ const db = knex(db_config["development"]);
 module.exports = {
   addUser,
   findUser,
-  getUsers
+  getUsers,
+  db
 };
 
 function addUser(user) {

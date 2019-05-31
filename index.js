@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const server = express();
 const cors = require("cors");
 const db = require("./usersModel");
+const db2 = require("./dbConfig");
+//const { db } = require('./usersModel')
 
 const {
   checkUserInfo,
@@ -64,33 +66,34 @@ server.post("/api/login", checkUserInfo, async (req, res) => {
   }
 });
 
-// view users after loging in
-server.get("/api/events", restricted, async (req, res) => {
-  try {
-    const events = await db.getUsers();
-    if (events.length > 0) {
-      res.status(200).json({ userts });
-    } else {
-      res.status(400).json({ message: "Try again" });
-    }
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Error: Sorry for the inconvenience" });
-  }
-});
-
-// get - view events
-// server.get("/api/events", restricted, (req, res) => {
-//   //res.send('Hello World');
-//   db("events")
-//     .then(events => {
-//       res.status(200).json(events);
-//     })
-//     .catch(error => {
-//       res.status(500).json(error);
-//     });
+// view events after loging in
+// server.get("/api/events", restricted, async (req, res) => {
+//   try {
+//     const events = await db.getUsers();
+//     if (events.length > 0) {
+//       res.status(200).json({ events });
+//     } else {
+//       res.status(400).json({ message: "Try again" });
+//     }
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: "Internal Error: Sorry for the inconvenience" });
+//   }
 // });
+
+//get - view events
+
+server.get("/api/events", restricted, (req, res) => {
+  //res.send('Hello World');
+  db2("events")
+    .then(events => {
+      res.status(200).json(events);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
 
 // post - add
 server.post("/api/events", (req, res) => {
@@ -98,7 +101,7 @@ server.post("/api/events", (req, res) => {
 
   const event = req.body;
 
-  db("events")
+  db2("events")
     .insert(event)
     .then(ids => {
       res.status(201).json(ids); //just a true or false flag
@@ -113,7 +116,7 @@ server.post("/api/events", (req, res) => {
 server.put("/api/events/:id", (req, res) => {
   // res.send('Put Working');
 
-  db("events")
+  db2("events")
     .where({ id: req.params.id })
     .update(req.body)
     .then(count => {
@@ -133,7 +136,7 @@ server.put("/api/events/:id", (req, res) => {
 server.delete("/api/events/:id", (req, res) => {
   // res.send('Delete Working');
 
-  db("events")
+  db2("events")
     .where({ id: req.params.id })
     .del()
     .then(count => {
