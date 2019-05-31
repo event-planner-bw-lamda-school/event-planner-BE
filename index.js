@@ -95,6 +95,20 @@ server.get("/api/events", restricted, (req, res) => {
     });
 });
 
+server.get("/api/events/:id", restricted, (req, res) => {
+  //res.send('Hello World');
+ 
+
+  db2("events")
+    .where({ id: req.params.id })
+    .first()
+    .then(events => {
+      res.status(200).json(events);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
 // post - add
 server.post("/api/events", (req, res) => {
   //res.send("Post working");
