@@ -101,7 +101,6 @@ server.get("/api/events/:id", restricted, (req, res) => {
 
   db2("events")
     .where({ id: req.params.id })
-    .first()
     .then(events => {
       res.status(200).json(events);
     })
