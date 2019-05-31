@@ -97,11 +97,12 @@ server.get("/api/events", restricted, (req, res) => {
 
 server.get("/api/events/:id", restricted, (req, res) => {
   //res.send('Hello World');
- 
+ console.log(req.params.id)
 
   db2("events")
     .where({ id: req.params.id })
     .then(events => {
+      console.log(events)
       res.status(200).json(events);
     })
     .catch(error => {
